@@ -1,31 +1,25 @@
 import React from "react";
-import logo from './logo.svg';
-import './App.css';
-
-
+import "./App.css";
 
 class App extends React.Component {
-  state ={string:'hello world'};
-  
+  state = {
+    monsters: [],
+  };
+  componentDidMount(){
+    fetch('https://jsonplaceholder.typicode.com/users')
+    .then(response => response.json())
+    .then(users => this.setState({monsters : users }));
+  }
 
-  render(){
+  render() {
     return (
       <div className="App">
-        <header className="App-header">
-          <img src={logo} className="App-logo" alt="logo" />
-          <p>
-           {this.state.string}
-          </p>
-          <button
-            onClick={()=>this.setState({string:'Welcome to HELL!!!'})}
-          >
-            Click Me!
-          </button>
-        </header>
+        {this.state.monsters.map((monster) => (
+          <h1 key={monster.id}>{monster.name}</h1>
+        ))}
       </div>
     );
   }
- 
 }
 
 export default App;
